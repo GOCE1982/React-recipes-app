@@ -1,23 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import { Container } from 'semantic-ui-react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { history } from './app/store';
+import { ConnectedRouter } from 'connected-react-router';
+import Navbar from './components/Navbar';
+import RecipeShow from './components/RecipeShow';
+import RecipeForm from './components/RecipeForm';
+import Recipes from './components/Recipes';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ConnectedRouter history={history}>
+        <Router basename="/recipes">
+          <div>
+            <Navbar />
+            <Container>
+              <Switch>
+                <Route exact path="/" component={Recipes} />
+                <Route exact path='/new' component={RecipeForm}/>
+                <Route path='/:recipeId' component={RecipeShow}/>
+              </Switch>
+            </Container>
+          </div>
+        </Router>
+      </ConnectedRouter>
     </div>
   );
 }

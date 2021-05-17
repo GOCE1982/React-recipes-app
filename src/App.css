@@ -2,37 +2,103 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.recipeName {
+  font-family: fantasy;
+  font-size: 50px;
+  font-weight: 500;
+  padding-top: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/** NavLinks **/
+
+.home img {
+  height: 643px;
+  width: 585px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/** RecipeCard **/
+
+.RecipeCard {
+  float: left;
+  margin: 10px;
+  width: 350px;
+  height: 340px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.App-link {
-  color: #61dafb;
+.RecipeCard:hover {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.media {
+  width: 200px;
+  height: 160px;
+  padding-top: 30px;
+}
+
+.card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 30px;
+  font-weight: 200;
+  line-height: 60px;
+  margin: 10px 0;
+}
+
+.card-details {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 6px;
+  margin: 5px 0 20px;
+  position: relative;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.card-details:after {
+  background-color: #b8bddd;
+  content: '';
+  display: block;
+  height: 1px;
+  position: absolute;
+  top: 9px;
+  width: 60%;
+}
+
+/** RecipeForm **/
+
+input[type='text'] {
+  margin-bottom: 20px;
+  margin-top: 10px;
+  width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #a9a9a9;
+}
+
+button[type='submit'] {
+  margin-bottom: 20px;
+  width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #a9a9a9;
+  background-color: #007acc;
+  color: #f0f8ff;
+  opacity: 0.5;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+textarea {
+  width: 100%;
+  padding: 15px;
+  margin-top: 10px;
+  border: 1px solid #a9a9a9;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  resize: none;
+}
+input[type='text']:focus,
+textarea:focus {
+  border-color: #4697e4;
 }
