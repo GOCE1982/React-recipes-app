@@ -6,12 +6,9 @@
     "@testing-library/jest-dom": "^5.12.0",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
-    "axios": "^0.21.1",
     "connected-react-router": "^6.9.1",
-    "immer": "^9.0.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-hot-loader": "^4.13.0",
     "react-redux": "^7.2.4",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
@@ -20,7 +17,6 @@
     "redux-thunk": "^2.3.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.0.3",
-    "uuid": "^8.3.2",
     "web-vitals": "^1.1.1"
   },
   "scripts": {
@@ -48,7 +44,5 @@
     ]
   },
   "homepage": "/recipes",
-  "devDependencies": {
-    "@hot-loader/react-dom": "^17.0.1"
-  }
+  "devDependencies": {}
 }
