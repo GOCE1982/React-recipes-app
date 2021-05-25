@@ -2,7 +2,6 @@ import {
   ADD_INGREDIENT,
   GET_INGREDIENTS,
   RESET_INGREDIENTS,
-  SET_CURRENT_INGREDIENT,
   UPDATE_INGREDIENT,
   UPDATED_RECIPE,
   RESET_RECIPE_FORM
@@ -36,12 +35,6 @@ export const recipeFormData = (state = initialState, action) => {
           ...initialState.ingredients
         ]
       }
-    
-    case SET_CURRENT_INGREDIENT:
-      let newCurrent = state.currentIngredient.id === action.payload.id ? initialState.currentIngredient : action.payload;
-      return Object.assign({}, state, {
-        currentIngredient: newCurrent
-      });
     
     case UPDATE_INGREDIENT: 
       return Object.assign({}, state, { currentIngredient: action.payload }, {

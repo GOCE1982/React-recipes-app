@@ -4,12 +4,12 @@ import './index.css';
 import 'semantic-ui-css/semantic.min.css'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Provider } from 'react-redux';
-import store from './app/store';  
+import { Provider, ReactReduxContext } from 'react-redux';
+import store, { history } from './app/store';  
  
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
+  <Provider store={store} context={ReactReduxContext}>
+    <App history={history} />
   </Provider>,
   document.getElementById('root')
 );

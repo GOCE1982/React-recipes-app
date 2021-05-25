@@ -33,7 +33,7 @@ store.dispatch({
       hours: 0,
       minutes: 15
     },
-    instructions: 'Pay someone else to make your Omlette!'
+    instructions: 'Pay someone else to make your Omlette!',
   }
 })
 

@@ -1,43 +1,33 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { history } from '../app/store'
 import { useActions } from '../hooks/use-actions';
-import { Button, Modal } from 'semantic-ui-react';
+import CoreModal from './CoreModal';
 
 const ModalComponent = ({ recipeId }) => {
-  const { deleteRecipe, openModal, closeModal } = useActions();
+  const { deleteRecipe, openModal, closeModal, fetchRecipe, getAllRecipes } = useActions();
   const dispatch = useDispatch();
   const { open, size, dimmer } = useSelector(state => state.modal);
-
-  let history = useHistory();
+  const recipe = useSelector(state => state.recipes.all[recipeId])
+  const recipes = useSelector(state => state.recipes);
 
   const onDelete = () => {
-    deleteRecipe(recipeId, history);
-    dispatch(closeModal())
+    fetchRecipe(recipe)
+    deleteRecipe(recipe.id, history);
+    const filtered = Object.assign({}, Object.fromEntries(Object.entries(recipes).filter(([k, v]) => v !== recipes.all)), {all: [recipes.all.filter(recipe => recipe.id !== recipeId)][0]})
+    history.push('/recipes', filtered)
+    closeModal();
+    dispatch(getAllRecipes(filtered));
   }
 
   return (
-    <Modal
+    <CoreModal
       open={open}
       onClose={() => dispatch(closeModal())}
       onOpen={() => dispatch(openModal())}
       size={size}
       dimmer={dimmer}
-    >
-      <Modal.Header>Confirm Delete Recipe?</Modal.Header>
-      <Modal.Content>
-        <p>
-          This action is irreversible. Are you sure?
-        </p>
-      </Modal.Content>
-      <Modal.Actions>
-        <Button negative onClick={() => dispatch(closeModal())}>
-          No
-        </Button>
-        <Button positive onClick={() => onDelete()}>
-          Yes
-        </Button>
-      </Modal.Actions>
-    </Modal>
+      onDelete={() => onDelete()}
+    />
   )
 }
 

@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { useActions } from '../hooks/use-actions';
 import { Button, Header, Table, Icon } from 'semantic-ui-react';
 import ModalComponent from './Modal.jsx';
 import isEmpty from '../helpers/isEmpty';
 
-const Recipes = () => {
+const Recipes = ({ match }) => {
   const { getAllRecipes, openModal } = useActions();
   const dispatch = useDispatch();
   const recipes = useSelector(state => state.recipes);
+
+  const [id, setId] = useState('');
 
   useEffect(() => {
     (async () => {
@@ -28,10 +30,10 @@ const Recipes = () => {
           <Table.HeaderCell>Recipe Ingredients</Table.HeaderCell>
           <Table.HeaderCell>Recipe Instructions</Table.HeaderCell>
           <Table.HeaderCell singleLine>Preparation Time</Table.HeaderCell>
-          <Table.HeaderCell><Icon name="attention"/></Table.HeaderCell>
+          <Table.HeaderCell><Icon name="attention" color="red"/></Table.HeaderCell>
         </Table.Row>
       </Table.Header>
-      {recipes.all && recipes.all.map((recipe, i) => {
+      {!isEmpty(recipes.all) && recipes.all.map((recipe, i) => {
         const { ingredients } = recipe;
         return (
           <Table.Body key={i}>
@@ -70,12 +72,15 @@ const Recipes = () => {
               <Table.Cell>
                 {isEmpty(recipe.preparation_time.hours) || recipe.preparation_time.hours === 0 ? (<span>{`${recipe.preparation_time.minutes} minutes`}</span>) : (<span>{`${recipe.preparation_time.hours} hours, ${recipe.preparation_time.minutes} minutes`}</span>)}
               </Table.Cell>
-              <Table.Cell error>
-                <Button onClick={() => dispatch(openModal('tiny', 'blurring'))} color="red" size="small">
+              {recipe && <Table.Cell error>
+                <Button onClick={() => {
+                  setId(recipe.id)
+                  dispatch(openModal('tiny', 'blurring'))
+                }} color="red" size="small">
                   Delete Recipe
                 </Button>
-                <ModalComponent recipeId={recipe.id} />
-              </Table.Cell>
+                <ModalComponent recipeId={id} />
+              </Table.Cell>}
             </Table.Row>
           </Table.Body>
         )})
@@ -84,4 +89,4 @@ const Recipes = () => {
   )
 }
 
-export default Recipes;
+export default withRouter(Recipes);

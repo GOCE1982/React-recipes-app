@@ -1,5 +1,4 @@
 import {
-  FETCH_RECIPE,
   SET_RECIPE,
   EDIT_RECIPE,
   UPDATED_RECIPE,
@@ -11,17 +10,15 @@ import {
 import {
   setRecipes,
   removeRecipe,
+  getRecipe,
 } from '../action-creators';
 
 export const getAllRecipes = (recipes) => {
   return setRecipes(recipes)
 };
 
-export const fetchRecipe = (recipeId) => {
-  return {
-    type: FETCH_RECIPE,
-    payload: recipeId
-  }
+export const fetchRecipe = (recipe) => dispatch => {
+  dispatch(getRecipe(recipe))
 };
 
 export const createRecipe = (recipe, routerHistory) => dispatch => {
@@ -43,7 +40,7 @@ export const createRecipe = (recipe, routerHistory) => dispatch => {
 export const deleteRecipe = (recipeId, routerHistory) => dispatch => {
   try {
     dispatch(removeRecipe(recipeId));
-    routerHistory.push('/');
+    routerHistory.replace('/');
   } catch (err) {
     dispatch({
       type: 'ERROR',

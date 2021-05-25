@@ -1,9 +1,16 @@
-import { Input, Segment, Header } from 'semantic-ui-react';
-import { useRef } from 'react';
+import { Input, Segment, Header, Button } from 'semantic-ui-react';
+import { useRef, useState } from 'react';
 
-const IngredientInputs = ({ ingredients, handleChange }) => {
+const IngredientInputs = ({ ingredients, handleChange, handleOnClick }) => {
 
-  const inputRef = useRef(null)
+  const inputRef = useRef(null);
+  const [disable, setDisable] = useState('');
+
+  const onTrigger = () => {
+    setDisable(!disable);
+    handleOnClick(disable);
+    // e.preventDefault();
+  }
 
   return (
       ingredients.map((val, idx) => {
@@ -26,6 +33,7 @@ const IngredientInputs = ({ ingredients, handleChange }) => {
                   name={ingId}
                   data-id={idx}
                   id={ingId}
+                  disabled={disable}
                 />
                 <datalist
                   id="ingredients.name"
@@ -58,6 +66,7 @@ const IngredientInputs = ({ ingredients, handleChange }) => {
                   min={0}
                   className="quantity"
                   onChange={handleChange}
+                  disabled={disable}
                   // value={ingredients[idx].quantity}
                 />
               </Input>
@@ -74,6 +83,7 @@ const IngredientInputs = ({ ingredients, handleChange }) => {
                   onChange={handleChange}
                   // value={ingredients[idx].unit}
                   ref={inputRef}
+                  disabled={disable}
                 />
                 <datalist id="unit" >
                   <option value="pcs">pcs</option>
@@ -84,6 +94,9 @@ const IngredientInputs = ({ ingredients, handleChange }) => {
                 </datalist>
               </Input>
             </Segment>
+            <div style={{margin: '1vh 0'}}>
+              <Button className="add_ingredient" color="teal" size="medium" onClick={(e) => onTrigger(e.preventDefault())}>Toggle Add To Ingredients</Button>
+            </div>
           </div>
           )
       })

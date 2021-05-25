@@ -3,7 +3,7 @@ import { createRecipe } from '../app/actions/recipeActions';
 import { updateRecipeFormData, addIngredient, setCurrentIngredient, resetRecipeForm } from '../app/actions/recipeForm';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Input, Button, Form, TextArea, Segment, Divider, Header } from 'semantic-ui-react';
+import { Input, Form, TextArea, Segment, Divider, Header } from 'semantic-ui-react';
 import IngredientInputs from './IngredientsInputs';
 import isEmpty from '../helpers/isEmpty'
 
@@ -27,7 +27,8 @@ class RecipeForm extends React.Component {
       },
       instructions: '',
       currentIngredient: null,
-      id: null
+      id: 0,
+      disableInput: false
     }
   }
 
@@ -53,8 +54,7 @@ class RecipeForm extends React.Component {
     return lastId+1;
   }
 
-  handleAddIngredients = e => {
-    e.preventDefault();
+  handleAddIngredients = () => {
     const { ingredient } = this.state;
     if (isEmpty(ingredient.name) || isEmpty(ingredient.quantity) || isEmpty(ingredient.unit)) {
       return;
@@ -81,7 +81,7 @@ class RecipeForm extends React.Component {
     }
 
     if (["hours", "minutes"].includes(e.target.className) && e.target.value.length) {
-      this.setState({ preparation_time: { ...this.state.preparation_time, [e.target.className]: e.target.value } }, () => console.log(this.state.preparation_time));
+      this.setState({ preparation_time: { ...this.state.preparation_time, [e.target.className]: e.target.value } });
     }
   }
 
@@ -90,19 +90,32 @@ class RecipeForm extends React.Component {
 
     const { createRecipe, history } = this.props;
     const recipeData = {
+      id: this.props.id,
       name: this.state.name,
       source: this.state.source,
       ingredients: this.props.recipeFormData.ingredients,
       preparation_time: this.state.preparation_time,
       instructions: this.state.instructions,
     };
-    if (this.state.ingredients.length < 1) {
-      alert('Must add at least one ingredient!');
-      return;
-    } else {
-      createRecipe(recipeData, history);
-      resetRecipeForm();
+
+    if (recipeData.name.length < 1 || recipeData.ingredients.length < 1) {
+      let errors = [];
+      if (recipeData.name.length < 1) {
+        errors.push('Recipe name is required.');
+      } 
+      if (recipeData.ingredients.length < 1 || isEmpty(recipeData.ingredient)) {
+        errors.push('You must include at least one ingredient.');
+        alert('Must add at least one ingredient!');
+      }
+      if (errors.length >= 1) {
+        this.setState({
+          errors: errors.join(' ')
+        });
+        return;
+      }
     }
+    createRecipe(recipeData, history);
+    resetRecipeForm();
   }
 
   render() {
@@ -113,7 +126,6 @@ class RecipeForm extends React.Component {
         <h1>Add a new Recipe</h1>
         <Form onSubmit={this.handleOnSubmit}>
           <Segment>
-            {/* <label htmlFor="name">Recipe Name</label> */}
             <Input
               labelPosition="left"
               label="Recipe Name"
@@ -126,7 +138,6 @@ class RecipeForm extends React.Component {
             />
             </Segment>
           <Segment>
-            {/* <label htmlFor="source">Recipe Source</label> */}
             <Input
               labelPosition="left"
               label="Recipe Source"
@@ -138,12 +149,8 @@ class RecipeForm extends React.Component {
             />
           </Segment>
           <Divider hidden />
-          <IngredientInputs ingredients={ingredients} handleChange={this.handleOnChange} />
-          <div style={{margin: '1vh 0'}}>
-            <Button color="green" size="medium" onClick={this.handleAddIngredients}>Add To Ingredients</Button>
-          </div>
+          <IngredientInputs ingredients={ingredients} handleChange={this.handleOnChange} handleOnClick={this.handleAddIngredients} />
           <Segment>
-            {/* <label htmlFor="preparation_time">Preparation Time</label> */}
             <Header>Preparation Time</Header>
             <Input
               type="number"

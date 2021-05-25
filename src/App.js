@@ -7,11 +7,12 @@ import Navbar from './components/Navbar';
 import RecipeShow from './components/RecipeShow';
 import RecipeForm from './components/RecipeForm';
 import Recipes from './components/Recipes';
+import { ReactReduxContext } from 'react-redux';
 
 function App() {
   return (
     <div className="App">
-      <ConnectedRouter history={history}>
+      <ConnectedRouter history={history} context={ReactReduxContext}>
         <Router basename="/recipes">
           <div>
             <Navbar />
@@ -19,7 +20,7 @@ function App() {
               <Switch>
                 <Route exact path="/" component={Recipes} />
                 <Route exact path='/new' component={RecipeForm}/>
-                <Route path='/:recipeId' component={RecipeShow}/>
+                <Route exact path='/:recipeId' component={RecipeShow}/>
               </Switch>
             </Container>
           </div>
