@@ -12,12 +12,19 @@ import thunk from 'redux-thunk';
 export const history = createBrowserHistory();
 const router = routerMiddleware(history);
 
+const composeEnhancers =
+      typeof window === 'object' &&
+      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
+      window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+      // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+      }) : compose;
+    
+const enhancers = composeEnhancers(applyMiddleware(thunk, router))
+
 const store = createStore(
   connectRouter(history)(reducers),
   {},
-  compose(applyMiddleware(thunk, router),
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  )
+  enhancers
 );
 
 store.dispatch({
