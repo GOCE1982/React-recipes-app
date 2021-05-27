@@ -6,12 +6,14 @@ import { Button, Header, Table, Icon } from 'semantic-ui-react';
 import ModalComponent from './Modal.jsx';
 import isEmpty from '../helpers/isEmpty';
 
-const Recipes = ({ match }) => {
+const Recipes = () => {
   const { getAllRecipes, openModal } = useActions();
   const dispatch = useDispatch();
   const recipes = useSelector(state => state.recipes);
 
   const [id, setId] = useState('');
+
+  const colors = ["teal", "olive", "brown", "green", "red", "orange", "blue", "purple"]
 
   useEffect(() => {
     (async () => {
@@ -21,16 +23,17 @@ const Recipes = ({ match }) => {
   }, [dispatch]);
 
   return (
-    <Table celled padded>
+    <Table celled padded striped sortable color="grey">
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell singleLine>ID</Table.HeaderCell>
           <Table.HeaderCell singleLine>Recipe Name</Table.HeaderCell>
           <Table.HeaderCell singleLine>Recipe Source</Table.HeaderCell>
-          <Table.HeaderCell>Recipe Ingredients</Table.HeaderCell>
-          <Table.HeaderCell>Recipe Instructions</Table.HeaderCell>
+          <Table.HeaderCell singleLine># of Ingredients</Table.HeaderCell>
+          <Table.HeaderCell>Ingredients</Table.HeaderCell>
+          <Table.HeaderCell>Preparation Instructions</Table.HeaderCell>
           <Table.HeaderCell singleLine>Preparation Time</Table.HeaderCell>
-          <Table.HeaderCell><Icon name="attention" color="red"/></Table.HeaderCell>
+          <Table.HeaderCell><Icon name="attention" /></Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       {!isEmpty(recipes.all) && recipes.all.map((recipe, i) => {
@@ -44,11 +47,12 @@ const Recipes = ({ match }) => {
                 </Header>
               </Table.Cell>
               <Table.Cell>
-                <Header as={Link} to={`/${recipe.id}`} textAlign='center'>
+                <Header as={Link} to={`/${recipe.id}`} textAlign='center' color={colors[Math.floor(Math.random() * colors.length)]}>
                   {recipe.name}
                 </Header>
               </Table.Cell>
               <Table.Cell singleLine>{recipe.source}</Table.Cell>
+              <Table.Cell singleLine>{ingredients.length}</Table.Cell>
               <Table.Cell textAlign='left'>
                 {ingredients.length <= 3 ?
                   (ingredients.map(ingredient => (
@@ -76,7 +80,7 @@ const Recipes = ({ match }) => {
                 <Button onClick={() => {
                   setId(recipe.id)
                   dispatch(openModal('tiny', 'blurring'))
-                }} color="red" size="small">
+                }} color="red" size="tiny">
                   Delete Recipe
                 </Button>
                 <ModalComponent recipeId={id} />
