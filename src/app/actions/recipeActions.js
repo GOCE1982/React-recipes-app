@@ -13,8 +13,9 @@ import {
   getRecipe,
 } from '../action-creators';
 
-export const getAllRecipes = (recipes) => {
-  return setRecipes(recipes)
+export const getAllRecipes = (recipes) => dispatch => {
+  dispatch(setRecipeLoading())
+  dispatch(setRecipes(recipes))
 };
 
 export const fetchRecipe = (recipe) => dispatch => {
@@ -55,6 +56,12 @@ export const setCurrentRecipe = (recipe) => {
     payload: recipe
   }
 };
+
+export const setRecipeLoading = () => {
+  return {
+    type: 'RECIPE_LOADING'
+  }
+}
 
 export const editRecipe = () => {
   return {

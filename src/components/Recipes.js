@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { useActions } from '../hooks/use-actions';
-import { Button, Header, Table, Icon } from 'semantic-ui-react';
+import { Button, Header, Table, Icon, Loader } from 'semantic-ui-react';
 import ModalComponent from './Modal.jsx';
 import isEmpty from '../helpers/isEmpty';
 
@@ -17,10 +17,15 @@ const Recipes = () => {
 
   useEffect(() => {
     (async () => {
-      dispatch(getAllRecipes(await recipes));
+      getAllRecipes(await recipes);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
+
+  const { all, loading } = recipes;
+  if (isEmpty(all) || loading) {
+    return <Loader active size="big" indeterminate>Getting the Recipes</Loader>
+  }
 
   return (
     <Table celled padded striped sortable color="grey">

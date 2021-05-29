@@ -109,6 +109,7 @@ export const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				currentRecipe: initialState.currentRecipe,
+				isCurrent: false,
 				all: others,
 			};
 		}

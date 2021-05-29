@@ -16,7 +16,7 @@ const ModalComponent = ({ recipeId }) => {
     const filtered = Object.assign({}, Object.fromEntries(Object.entries(recipes).filter(([k, v]) => v !== recipes.all)), {all: [recipes.all.filter(recipe => recipe.id !== recipeId)][0]})
     history.push('/recipes', filtered)
     closeModal();
-    dispatch(getAllRecipes(filtered));
+    getAllRecipes(filtered);
   }
 
   return (
