@@ -4,7 +4,8 @@ import {
 	DELETE_RECIPE,
   FETCH_RECIPE,
   GET_RECIPES,
-	SET_RECIPE
+	SET_RECIPE,
+	RECIPE_LOADING
 } from "../action-types";
 
 const initialState = {
@@ -22,7 +23,7 @@ function getNextId(id) {
 
 export const reducer = (state = initialState, action) => {
 	switch (action.type) {
-		case 'RECIPE_LOADING':
+		case RECIPE_LOADING:
 			return {
 				...state,
 				loading: true
@@ -42,8 +43,8 @@ export const reducer = (state = initialState, action) => {
 				all: recipes,
 				loading: false,
 				isCurrent: false
-			}; 
-		
+			};
+
 		case ADD_RECIPE: {
 			let newRecipe = action.payload;
       newRecipe.id = getNextId(state.lastId);
@@ -52,27 +53,9 @@ export const reducer = (state = initialState, action) => {
 				...state,
 				all: [ ...allRecipes, newRecipe ],
 			}
-      // allRecipes.push(newRecipe);
-      // return Object.assign({}, state, {all: allRecipes});
 		}
+			
 		case FETCH_RECIPE: {
-			// const { all } = state;
-			// if (action.payload !== 0) {
-				
-			// 	return Object.assign({}, state,
-			// 		{currentRecipe: action.payload},
-			// 		{all: all.map(recipe => {
-			// 			if (recipe.id === action.payload.id) {
-			// 				return action.payload
-			// 			}
-			// 			return recipe
-			// 		})
-			// 	});
-			// }
-			// return {
-			// 	...state,
-			// 	currentRecipe: {}
-			// };
 			return {
 				...state,
 				currentRecipe: action.payload,
@@ -96,13 +79,6 @@ export const reducer = (state = initialState, action) => {
 			}
 		
 		case DELETE_RECIPE: {
-			// const parentKey = Object.keys(state.recipes.all).filter(
-			// 	key => state.recipes.all[key].id === action.payload
-			// )[0];
-			// const { [parentKey]: value, ...others } = state.recipes;
-			// if (state.currentRecipe.id === action.payload) {
-			// 	state.currentRecipe = {};
-			// }
 			const others = state.all.filter(recipe => {
 				return recipe.id !== action.payload
 			})
