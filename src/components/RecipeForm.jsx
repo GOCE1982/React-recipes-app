@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types'
 import React, { createRef } from 'react';
 import { createRecipe } from '../app/actions/recipeActions';
-import { updateRecipeFormData, addIngredient, setCurrentIngredient, resetRecipeForm } from '../app/actions/recipeForm';
+import { addIngredient, setCurrentIngredient, resetRecipeForm } from '../app/actions/recipeForm';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Input, Form, TextArea, Segment, Divider, Header } from 'semantic-ui-react';
@@ -195,9 +196,18 @@ const mapStateToProps = state => {
   return {
     recipeFormData: state.recipeForm,
     ingredients: state.ingredients,
-    currentIngredient: state.currentIngredient,
-    preparation_time: state.preparation_time
+    currentIngredient: state.currentIngredient
   }
 }
 
-export default connect(mapStateToProps, { updateRecipeFormData, resetRecipeForm, createRecipe, addIngredient, setCurrentIngredient})(withRouter(RecipeForm));
+RecipeForm.propTypes = {
+  recipeFormData: PropTypes.object,
+  ingredients: PropTypes.array,
+  addIngredient: PropTypes.func,
+  createRecipe: PropTypes.func,
+  setCurrentIngredient: PropTypes.func,
+  resetRecipeForm: PropTypes.func,
+  currentIngredient: PropTypes.object
+}
+
+export default connect(mapStateToProps, { resetRecipeForm, createRecipe, addIngredient, setCurrentIngredient})(withRouter(RecipeForm));

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Input, Segment, Header, Button } from 'semantic-ui-react';
 import { useRef, useState } from 'react';
 
@@ -101,6 +102,12 @@ const IngredientInputs = ({ ingredients, handleChange, handleOnClick }) => {
           )
       })
   )
+}
+
+IngredientInputs.propTypes = {
+  ingredients: PropTypes.array.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleOnClick: PropTypes.func.isRequired
 }
 
 export default IngredientInputs;

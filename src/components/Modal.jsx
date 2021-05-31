@@ -1,7 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import { history } from '../app/store'
 import { useActions } from '../hooks/use-actions';
 import CoreModal from './CoreModal';
+import { Modal } from 'semantic-ui-react';
 
 const ModalComponent = ({ recipeId }) => {
   const { deleteRecipe, openModal, closeModal, fetchRecipe, getAllRecipes } = useActions();
@@ -29,6 +31,13 @@ const ModalComponent = ({ recipeId }) => {
       onDelete={() => onDelete()}
     />
   )
+}
+
+Modal.propTypes = {
+  recipeId: PropTypes.string,
+  open: PropTypes.bool,
+  defaultOpen: PropTypes.bool,
+  size: PropTypes.string,
 }
 
 export default ModalComponent;

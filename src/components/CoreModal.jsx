@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import { Button, Modal } from 'semantic-ui-react';
 
 const CoreModal = ({ open, onClose, onOpen, size, dimmer, onDelete }) => {
@@ -26,6 +27,15 @@ const CoreModal = ({ open, onClose, onOpen, size, dimmer, onDelete }) => {
       </Modal.Actions>
     </Modal>
   )
+}
+
+CoreModal.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onOpen: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  size: PropTypes.string,
+  dimmer: PropTypes.string
 }
 
 export default CoreModal;

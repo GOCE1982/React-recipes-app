@@ -92,18 +92,10 @@ const Recipes = () => {
     <Table celled striped compact unstackable color="grey">
       <Table.Header>
         <Table.Row textAlign="center">
-          <Table.HeaderCell singleLine>
-            ID
-          </Table.HeaderCell>
-          <Table.HeaderCell singleLine>
-            Recipe Name
-          </Table.HeaderCell>
-          <Table.HeaderCell singleLine>
-            Recipe Source
-          </Table.HeaderCell>
-          <Table.HeaderCell singleLine>
-            # of Ingredients
-          </Table.HeaderCell>
+          <Table.HeaderCell singleLine>ID</Table.HeaderCell>
+          <Table.HeaderCell singleLine>Recipe Name</Table.HeaderCell>
+          <Table.HeaderCell singleLine>Recipe Source</Table.HeaderCell>
+          <Table.HeaderCell singleLine># of Ingredients</Table.HeaderCell>
           <Table.HeaderCell>Ingredients</Table.HeaderCell>
           <Table.HeaderCell>Preparation Instructions</Table.HeaderCell>
           <Table.HeaderCell singleLine>Preparation Time</Table.HeaderCell>

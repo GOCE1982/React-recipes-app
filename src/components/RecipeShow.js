@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import PropTypes from 'prop-types'
 import { useActions } from '../hooks/use-actions';
 
 import { Card, Button, List, Modal } from 'semantic-ui-react';
@@ -36,8 +37,8 @@ const RecipeShow = ({ match }) => {
     onClose={() => setFirstOpen(false)}
     onOpen={() => setFirstOpen(true)}
     onUnmount={() => history.push('/')}
-      // size={size}
-      // dimmer={dimmer}
+    // size={'small'}
+    // dimmer={dimmer}
     >
     {recipe ? (
       <>
@@ -96,6 +97,12 @@ const RecipeShow = ({ match }) => {
       <p>Loading...</p>
       )}
   </Modal>)
+}
+
+RecipeShow.propTypes = {
+  match: PropTypes.object.isRequired,
+  size: PropTypes.string,
+  dimmer: PropTypes.string
 }
 
 export default withRouter(RecipeShow);
